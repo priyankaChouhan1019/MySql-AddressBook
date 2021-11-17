@@ -1,0 +1,408 @@
+        		 Welcome to Address book Database Management
+-------------------------------------------------------------------------------------------------------
+
+//UC1
+create addres book database:
+
+mysql> create database AddressBook;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| addressbook        |
+| classicmodels      |
+| demo               |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------
+//UC2
+create table in the database:
+
+mysql> use addressbook;
+Database changed
+mysql> create table addressbook(
+    -> firstname varchar(150) not null,
+    -> lastname varchar(150) not null,
+    -> address varchar(150) not null,
+    -> city varchar(100) not null,
+    -> state varchar(100) not null,
+    -> zip int not null,
+    -> phone_num int not null,
+    -> email varchar(100) not null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> decribe addressbook
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decribe addressbook' at line 1
+mysql> desc addressbook;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstname | varchar(150) | NO   |     | NULL    |       |
+| lastname  | varchar(150) | NO   |     | NULL    |       |
+| address   | varchar(150) | NO   |     | NULL    |       |
+| city      | varchar(100) | NO   |     | NULL    |       |
+| state     | varchar(100) | NO   |     | NULL    |       |
+| zip       | int          | NO   |     | NULL    |       |
+| phone_num | int          | NO   |     | NULL    |       |
+| email     | varchar(100) | NO   |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+-------------------------------------------------------------------------------------------------------
+
+//UC3
+Inserting the new addresses:
+
+mysql> INSERT INTO addressbook(firstname,lastname,address,city,state,zip,phone_num,email) VALUES
+    -> ('Sunil','Gollapalli','Uppal','Hyderabad','Telangana','500039','98745612','sunil@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO addressbook(firstname,lastname,address,city,state,zip,phone_num,email) VALUES
+    -> ('Subbu','Gollapalli','Jangaon','Warangal','Telangana','506167','89645123','subhash@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO addressbook(firstname,lastname,address,city,state,zip,phone_num,email) VALUES
+    -> ('Srenadh','Gudi','Kammam','Kammam','Telangana','504768','45612398','srinadh@gmail.com'),
+    -> ('Uday','Nalla','Ramanthapur','Hyd','Telangana','500041','78945623','uday@gmail.com'),
+    -> ('Venu','Reddy','colva','Colagette','Goa','506484','56892347','venu@gmail.com');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select* from addressbook;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| Sunil     | Gollapalli | Uppal       | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   |
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com |
+| Srenadh   | Gudi       | Kammam      | Kammam    | Telangana | 504768 |  45612398 | srinadh@gmail.com |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+5 rows in set (0.00 sec)
+-----------------------------------------------------------------------------------------------------
+//UC4
+Updte the address by firstname:
+
+mysql> update adrressbook set address ='Tarnaka' where firstname='Sunil';
+ERROR 1146 (42S02): Table 'addressbook.adrressbook' doesn't exist
+mysql> alter table addressbook rename to address_book;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> update address_book set address = 'tarnaka' where firstname = 'Sunil';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from address_book;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| Sunil     | Gollapalli | tarnaka     | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   |
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com |
+| Srenadh   | Gudi       | Kammam      | Kammam    | Telangana | 504768 |  45612398 | srinadh@gmail.com |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+5 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------
+//UC5
+deleting the contact:
+
+mysql> delete from address_book where firstname = 'Srenadh';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select* from address_book;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| Sunil     | Gollapalli | tarnaka     | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   |
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+4 rows in set (0.00 sec)
+-------------------------------------------------------------------------------------------------------
+//UC6
+
+mysql> select firstname from address_book where city = 'Hyd';
++-----------+
+| firstname |
++-----------+
+| Uday      |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select firstname from address_book where city = 'Warangal';
++-----------+
+| firstname |
++-----------+
+| Subbu     |
++-----------+
+1 row in set (0.00 sec)
+------------------------------------------------------------------------------------------------------
+
+//UC7
+
+mysql> select state,count(firstname) from address_book where state ='Telangana';
++-----------+------------------+
+| state     | count(firstname) |
++-----------+------------------+
+| Telangana |                3 |
++-----------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select state,count(firstname) from address_book where state ='Goa';
++-------+------------------+
+| state | count(firstname) |
++-------+------------------+
+| Goa   |                1 |
++-------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select city,count(firstname) from address_book where city ='Hyderabad';
++-----------+------------------+
+| city      | count(firstname) |
++-----------+------------------+
+| Hyderabad |                1 |
++-----------+------------------+
+1 row in set (0.00 sec)
+------------------------------------------------------------------------------------------------------
+
+//UC8
+
+mysql> SELECT firstname, lastname, address, city, state, zip, phonenumber, email FROM address_book ORDER BY firstname;
+ERROR 1054 (42S22): Unknown column 'phonenumber' in 'field list'
+mysql> SELECT firstname, lastname, address, city, state, zip, phone_num, email FROM address_book ORDER BY firstname;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com |
+| Sunil     | Gollapalli | tarnaka     | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+
+4 rows in set (0.00 sec)
+-------------------------------------------------------------------------------------------------------
+
+//UC9
+
+mysql> alter table address_book add type varchar
+    -> ^C
+mysql> alter table address_book add type varchar(150) after email;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc address_book;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstname | varchar(150) | NO   |     | NULL    |       |
+| lastname  | varchar(150) | NO   |     | NULL    |       |
+| address   | varchar(150) | NO   |     | NULL    |       |
+| city      | varchar(100) | NO   |     | NULL    |       |
+| state     | varchar(100) | NO   |     | NULL    |       |
+| zip       | int          | NO   |     | NULL    |       |
+| phone_num | int          | NO   |     | NULL    |       |
+| email     | varchar(100) | NO   |     | NULL    |       |
+| type      | varchar(150) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> update address_book set type='family' where firstname='Subbu';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set type='friend' where firstname='Uday';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set type='Proffesional' where firstname='Venu';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from address_book;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             | type         |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+| Sunil     | Gollapalli | tarnaka     | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   | NULL         |
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com | family       |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    | friend       |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    | Proffesional |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+4 rows in set (0.00 sec)
+------------------------------------------------------------------------------------------------------
+
+//UC10
+
+mysql> update address_book set type='friend' where firstname='Uday';^C
+mysql> select type,count(phone_num) from address_book where type='friend';
++--------+------------------+
+| type   | count(phone_num) |
++--------+------------------+
+| friend |                1 |
++--------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select type,count(firstname) from address_book where type='friend';
++--------+------------------+
+| type   | count(firstname) |
++--------+------------------+
+| friend |                1 |
++--------+------------------+
+1 row in set (0.00 sec)
+______________________________________________________________________________________________________
+
+//UC11
+
+mysql> insert into address_book (firstname,lastname,address,city,state,zip,phone_num,email,type) values
+    -> ('Kranthi','Kodakanla','Shamirpet','Jangaon','Teangana','506167','89745632','kranthi@gmail.com','friend');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into address_book (firstname,lastname,address,city,state,zip,phone_num,email,type) values
+    -> ('Sushi','Gollapalli','jangaon','jangaon','Telangana','506167','69857421','sushil@gmail.com','family');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select* from address_book;
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+| firstname | lastname   | address     | city      | state     | zip    | phone_num | email             | type         |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+| Sunil     | Gollapalli | tarnaka     | Hyderabad | Telangana | 500039 |  98745612 | sunil@gmail.com   | NULL         |
+| Subbu     | Gollapalli | Jangaon     | Warangal  | Telangana | 506167 |  89645123 | subhash@gmail.com | family       |
+| Uday      | Nalla      | Ramanthapur | Hyd       | Telangana | 500041 |  78945623 | uday@gmail.com    | friend       |
+| Venu      | Reddy      | colva       | Colagette | Goa       | 506484 |  56892347 | venu@gmail.com    | Proffesional |
+| Kranthi   | Kodakanla  | Shamirpet   | Jangaon   | Teangana  | 506167 |  89745632 | kranthi@gmail.com | friend       |
+| Sushi     | Gollapalli | jangaon     | jangaon   | Telangana | 506167 |  69857421 | sushil@gmail.com  | family       |
++-----------+------------+-------------+-----------+-----------+--------+-----------+-------------------+--------------+
+6 rows in set (0.00 sec)
+_______________________________________________________________________________________________________
+//UC12
+
+mysql> create table person_contact(
+    -> firstname varchar(50) not null,
+    -> lastname varchar(50) not null,
+    -> address varchar(100) not null,
+    -> phonenumber bigint not null,'
+    '> phonenumber bigint not null,'
+    -> phonenumber bigint not null,
+    -> email varchar(50
+    ->
+    ->
+    ->
+    -> ),
+    -> primary key (firstname));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''
+phonenumber bigint not null,'
+phonenumber bigint not null,
+email varchar(50
+
+
+' at line 5
+mysql> create table person_contact(
+    -> firstname varchar(50) not null,
+    -> lastname varchar(50) not null,
+    -> address varchar(100) not null,
+    -> phonenumber bigint not null,
+    -> email varchar(50),
+    -> primary key (firstname)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc person_contact;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstname   | varchar(50)  | NO   | PRI | NULL    |       |
+| lastname    | varchar(50)  | NO   |     | NULL    |       |
+| address     | varchar(100) | NO   |     | NULL    |       |
+| phonenumber | bigint       | NO   |     | NULL    |       |
+| email       | varchar(50)  | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create table person_address(
+    -> zip int(10) not null,
+    -> city varchar(100) not null,
+    -> state varchar(100) not null,
+    -> primary key(zip));
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> desc person_address;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| zip   | int          | NO   | PRI | NULL    |       |
+| city  | varchar(100) | NO   |     | NULL    |       |
+| state | varchar(100) | NO   |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table person_contact_address
+    -> ( firstname varchar(50) not null,
+    -> zip int(10) not null,
+    -> foreign key(firstname)references person_contact(firstname),
+    -> foreign key(zip) references person_address(zip));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> insert into person_contact(firstname,lastname,address,phonenumber,email) values
+    -> ('shiva','balli','shamirpet','7894562814','shiva@gmail.com'),
+    -> ('sudeer','gadi','bhodhan','4875961235','sudheer@gmail.com');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select* from person_contact;
++-----------+----------+-----------+-------------+-------------------+
+| firstname | lastname | address   | phonenumber | email             |
++-----------+----------+-----------+-------------+-------------------+
+| shiva     | balli    | shamirpet |  7894562814 | shiva@gmail.com   |
+| sudeer    | gadi     | bhodhan   |  4875961235 | sudheer@gmail.com |
++-----------+----------+-----------+-------------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert int person_address(zip,city,state) values
+    -> ('500039','Uppal','Telangana'),
+    -> ('506178','panaji','Goa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int person_address(zip,city,state) values
+('500039','Uppal','Telangana'),
+('5061' at line 1
+mysql> insert into person_address(zip,city,state) values
+    -> ('500039','Uppal','Telangana'),
+    -> ('506178','panaji','Goa');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> slect* from person_address;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect* from person_address' at line 1
+mysql> select* from person_address;
++--------+--------+-----------+
+| zip    | city   | state     |
++--------+--------+-----------+
+| 500039 | Uppal  | Telangana |
+| 506178 | panaji | Goa       |
++--------+--------+-----------+
+2 rows in set (0.00 sec)
+___________________________________________________________________________________________________
+//UC13
+mysql> select * from person_contact_address;
+Empty set (0.00 sec)
+
+mysql>  select* from person_contact_address;
+Empty set (0.00 sec)
+
+mysql>  select* from person_contact;
++-----------+----------+-----------+-------------+-------------------+
+| firstname | lastname | address   | phonenumber | email             |
++-----------+----------+-----------+-------------+-------------------+
+| shiva     | balli    | shamirpet |  7894562814 | shiva@gmail.com   |
+| sudeer    | gadi     | bhodhan   |  4875961235 | sudheer@gmail.com |
++-----------+----------+-----------+-------------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql>
